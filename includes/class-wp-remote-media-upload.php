@@ -158,6 +158,8 @@ class WP_Remote_Media_Upload {
 		$this->loader->add_action( 'admin_enqueue_scripts', $wp_remote_media_upload_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'admin_menu', $wp_remote_media_upload_admin, 'wp_media_upload_admin_menu' );
 		$this->loader->add_filter( 'plugin_action_links_' . WP_REMOTE_MEDIA_UPLOAD_PLUGIN_BASENAME, $wp_remote_media_upload_admin, 'wp_media_upload_settings_link' );
+        $this->loader->add_action( 'wp_ajax_wp_media_upload_form_response', $wp_remote_media_upload_admin, 'wp_media_upload_form_response');
+
 	}
 
 	/**

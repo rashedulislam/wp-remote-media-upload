@@ -12,6 +12,11 @@
 <div class="wprmu-main-wrap wrap">
 
    <h1><?php _e( 'WP Remote Media Upload Settings', 'wp_remote_media_upload' ); ?></h1>
+   <?php
+      if ( !empty( $_POST[ 'wp-remote-media-submit' ] )) {
+          var_dump( $_POST[ 'image_urls' ]);
+      }
+   ?>
    <form method="post" action="<?php echo get_bloginfo( 'wpurl' ) . '/wp-admin/upload.php?page=wprm-options' ?>">
         <table class="form-table">
             <tr>
@@ -21,7 +26,7 @@
             </tr>
         </table>
         <?php wp_nonce_field( 'wp-remote-media-upload-options', 'wp_remote_media_upload_options_nonce', true, true ); ?>
-        <input type="submit" name="Options" class="button-primary" value="<?php echo _e( 'Upload Images', 'wp_remote_media_upload' ); ?>"/>
+        <input type="submit" name="wp-remote-media-submit" class="button-primary" value="<?php echo _e( 'Upload Images', 'wp_remote_media_upload' ); ?>"/>
    </form>
 
 </div>

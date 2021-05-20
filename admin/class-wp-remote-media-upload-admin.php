@@ -90,6 +90,16 @@ class WP_Remote_Media_Upload_Admin {
         return $links;
     }
 
+    public function wp_media_upload_form_response() {
+        if( isset( $_POST['ajaxrequest'] ) && $_POST['ajaxrequest'] === 'true' ) {
+            // server response
+            echo '<pre>';					
+              print_r( $_POST );
+            echo '</pre>';				
+            wp_die();
+        }
+    }
+
     
 	/**
 	 * Register the stylesheets for the admin area.
