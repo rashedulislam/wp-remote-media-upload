@@ -49,29 +49,54 @@ class WP_Remote_Media_Upload_Admin {
 	 */
 	public function __construct( $wp_remote_media_upload, $version ) {
 
-		$this->wp_remote_media_upload = $plugin_name;
+		$this->wp_remote_media_upload = $wp_remote_media_upload;
 		$this->version = $version;
 
 	}
 
+    /**
+	 * Register the hooks for the admin area.
+	 *
+	 * @since    1.0.0
+	 */
+	public function wp_media_upload_admin_menu() {
+
+		add_submenu_page(
+            'upload.php',
+            __( 'Upload Remote Media', 'wp_remote_media_upload' ),
+            __( 'Remote Media', 'wp_remote_media_upload' ),
+            'manage_options',
+            'wprm-options',
+            [$this, 'wprm_settings_page']);
+
+	}
+
+
+    /**
+    * Include options screen
+    *
+    * XHTML screen to prompt and update settings
+    *
+    * @since	1.2
+    */
+
+    public function wprm_settings_page() {
+        include_once( plugin_dir_path( __FILE__ ) . '/partials/wprm-settings-page.php' );
+    }
+
+    public function wp_media_upload_settings_link( $links ) {
+        $settings_link = '<a href="upload.php?page=wprm-options">' . __( 'Settings' ) . '</a>';
+        array_unshift( $links, $settings_link );
+        return $links;
+    }
+
+    
 	/**
 	 * Register the stylesheets for the admin area.
 	 *
 	 * @since    1.0.0
 	 */
 	public function enqueue_styles() {
-
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in WP_Remote_Media_Upload_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The WP_Remote_Media_Upload_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
 
 		wp_enqueue_style( $this->wp_remote_media_upload, plugin_dir_url( __FILE__ ) . 'css/wp-remote-media-upload-admin.css', array(), $this->version, 'all' );
 
@@ -83,18 +108,6 @@ class WP_Remote_Media_Upload_Admin {
 	 * @since    1.0.0
 	 */
 	public function enqueue_scripts() {
-
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in WP_Remote_Media_Upload_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The WP_Remote_Media_Upload_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
 
 		wp_enqueue_script( $this->wp_remote_media_upload, plugin_dir_url( __FILE__ ) . 'js/wp-remote-media-upload-admin.js', array( 'jquery' ), $this->version, false );
 

@@ -137,9 +137,9 @@ class WP_Remote_Media_Upload {
 	 */
 	private function set_locale() {
 
-		$plugin_i18n = new WP_Remote_Media_Upload_i18n();
+		$wp_remote_media_upload_i18n = new WP_Remote_Media_Upload_i18n();
 
-		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
+		$this->loader->add_action( 'plugins_loaded', $wp_remote_media_upload_i18n, 'load_plugin_textdomain' );
 
 	}
 
@@ -152,11 +152,12 @@ class WP_Remote_Media_Upload {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new WP_Remote_Media_Upload_Admin( $this->get_wp_remote_media_upload(), $this->get_version() );
+		$wp_remote_media_upload_admin = new WP_Remote_Media_Upload_Admin( $this->get_wp_remote_media_upload(), $this->get_version() );
 
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-
+		$this->loader->add_action( 'admin_enqueue_scripts', $wp_remote_media_upload_admin, 'enqueue_styles' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $wp_remote_media_upload_admin, 'enqueue_scripts' );
+		$this->loader->add_action( 'admin_menu', $wp_remote_media_upload_admin, 'wp_media_upload_admin_menu' );
+		$this->loader->add_filter( 'plugin_action_links_' . WP_REMOTE_MEDIA_UPLOAD_PLUGIN_BASENAME, $wp_remote_media_upload_admin, 'wp_media_upload_settings_link' );
 	}
 
 	/**

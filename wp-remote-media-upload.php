@@ -14,7 +14,7 @@
  *
  * @wordpress-plugin
  * Plugin Name:       WP Remote Media Upload
- * Plugin URI:        https://stacklearners.org/wp-remote-media-upload-uri/
+ * Plugin URI:        https://stacklearners.org/wp-remote-media-upload/
  * Description:       Upload Images From Remote URL Directly.
  * Version:           1.0.0
  * Author:            Md Rashedul Islam
@@ -36,7 +36,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Rename this for your plugin and update it as you release new versions.
  */
 define( 'WP_REMOTE_MEDIA_UPLOAD_VERSION', '1.0.0' );
-
+define('WP_REMOTE_MEDIA_UPLOAD_PLUGIN_BASENAME', plugin_basename(__FILE__));
 /**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-wp-remote-media-upload-activator.php
