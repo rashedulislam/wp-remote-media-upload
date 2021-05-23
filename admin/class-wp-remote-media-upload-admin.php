@@ -91,13 +91,9 @@ class WP_Remote_Media_Upload_Admin {
     }
 
     public function wp_media_upload_form_response() {
-        if( isset( $_POST['ajaxrequest'] ) && $_POST['ajaxrequest'] === 'true' ) {
-            // server response
-            echo '<pre>';					
-              print_r( $_POST );
-            echo '</pre>';				
-            wp_die();
-        }
+        check_ajax_referer( 'wp_remote_media_upload_nonce' );
+        $urls = $_POST['urls'];
+        error_log(print_r( $_POST, 1 ));
     }
 
     
@@ -120,6 +116,14 @@ class WP_Remote_Media_Upload_Admin {
 	public function enqueue_scripts() {
 
 		wp_enqueue_script( $this->wp_remote_media_upload, plugin_dir_url( __FILE__ ) . 'js/wp-remote-media-upload-admin.js', array( 'jquery' ), $this->version, false );
+
+        wp_localize_script( $this->wp_remote_media_upload, 'wp_remote_media_upload_localize',
+            array( 
+                'ajaxurl' => admin_url( 'admin-ajax.php' ),
+                'nonce' => wp_create_nonce('wp_remote_media_upload_nonce'),
+                'action' => "wp_media_upload_form_response",
+            )
+        );
 
 	}
 
