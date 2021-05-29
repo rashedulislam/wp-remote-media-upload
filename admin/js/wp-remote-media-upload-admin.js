@@ -1,31 +1,30 @@
-jQuery(document).ready(function($){
-	'use strict';
-
-	$( 'form.wp-remote-media-upload-form' ).on('submit', function(e){
-            
-        e.preventDefault();
-
+(function($) {
+	$(document).on( 'submit', 'form.wp-remote-media-upload-form', function( e ) {
+		e.preventDefault();
         let urls = $('#image_urls').val();
+        const splitreg = /[\s,|]+/;
+        const urlcheck = new RegExp("^(http[s]?:\\/\\/(www\\.)?|ftp:\\/\\/(www\\.)?|(www\\.)?){1}([0-9A-Za-z-\\.@:%_\+~#=]+)+((\\.[a-zA-Z]{2,3})+)(/(.)*)?(\\?(.)*)?");
+        let imageurls = urls.split(splitreg);
 
-        console.log(wp_remote_media_upload_localize.ajaxurl);
-        console.log(wp_remote_media_upload_localize.action);
-        
+        let filteredurls = imageurls.filter((url) => {
+            return urlcheck.test(url);
+        });
+        console.log(imageurls);
+		console.log(filteredurls);
         $.ajax({
             url: wp_remote_media_upload_localize.ajaxurl,
-            type:"POST",                
+            type: 'post',
             data: {
-                action : wp_remote_media_upload_localize.action,
-                urls: urls,
-           },
-           success: function(response){
-            console.log(response);
-           },
-           error: function(data){
-            console.log(data);
-           }
-        });
-        
+                _ajax_nonce: wp_remote_media_upload_localize.nonce,
+                action: wp_remote_media_upload_localize.action,
+                urls: filteredurls,
+            },
+            success: function( result ) {
+                console.log( result );
+            }
+        })
+
         $('.wp-remote-media-upload-form')[0].reset();
-    });
-    
-});
+
+	})
+})(jQuery);

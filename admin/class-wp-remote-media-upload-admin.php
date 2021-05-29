@@ -31,6 +31,15 @@ class WP_Remote_Media_Upload_Admin {
 	 */
 	private $wp_remote_media_upload;
 
+    /**
+	 * Image Upload class variable
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @var      string    $wp_remote_media_upload    The ID of this plugin.
+	 */
+	private $wp_download_remote_image;
+
 	/**
 	 * The version of this plugin.
 	 *
@@ -51,7 +60,11 @@ class WP_Remote_Media_Upload_Admin {
 
 		$this->wp_remote_media_upload = $wp_remote_media_upload;
 		$this->version = $version;
+        $this->load_dependencies();
+	}
 
+    private function load_dependencies() {
+		require_once plugin_dir_path( __FILE__ ) . '/partials/upload-remote-image-wordpress.php';
 	}
 
     /**
@@ -77,12 +90,18 @@ class WP_Remote_Media_Upload_Admin {
     *
     * XHTML screen to prompt and update settings
     *
-    * @since	1.2
+    * @since	1.0.0
     */
 
     public function wprm_settings_page() {
         include_once( plugin_dir_path( __FILE__ ) . '/partials/wprm-settings-page.php' );
     }
+
+    /**
+	 * Add settings link in plugins list
+	 *
+	 * @since    1.0.0
+	 */
 
     public function wp_media_upload_settings_link( $links ) {
         $settings_link = '<a href="upload.php?page=wprm-options">' . __( 'Settings' ) . '</a>';
@@ -90,10 +109,21 @@ class WP_Remote_Media_Upload_Admin {
         return $links;
     }
 
+    /**
+	 * Upload form response hook function
+	 *
+	 * @since    1.0.0
+	 */
+
     public function wp_media_upload_form_response() {
         check_ajax_referer( 'wp_remote_media_upload_nonce' );
         $urls = $_POST['urls'];
-        error_log(print_r( $_POST, 1 ));
+        $attachment_ids = [];
+        foreach ($urls as $url) {
+            $this->wp_download_remote_image = new WP_Download_Remote_Image($url);
+            $attachment_ids[] = $this->wp_download_remote_image->download();
+        }
+        wp_send_json( $attachment_ids );   
     }
 
     
