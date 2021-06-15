@@ -15,9 +15,9 @@
    <form method="post" action="" class="wp-remote-media-upload-form">
         <table class="form-table">
             <tr>
-                <th scope="row"><label for="image_urls"><?php echo ucwords( __( 'IMAGE URLS:', 'artiss-transient-cleaner' ) ); ?><?php echo _e( '<br>(Enter Urls separated by "," or "|")', 'wp_remote_media_upload' ); ?></label></th>
+                <th scope="row"><label for="image_url"><?php echo ucwords( __( 'Image url:', 'artiss-transient-cleaner' ) ); ?><?php echo _e( '<br>(Enter image url "jpg", "png", "gif", "ico" format)', 'wp_remote_media_upload' ); ?></label></th>
 
-                <td><textarea name="image_urls" id="image_urls" cols="100" placeholder="Enter Image Urls" required="required" rows="8" ></textarea></td>
+                <td><textarea name="image_url" id="image_url" cols="80" placeholder="Enter Image Url" required="required" rows="3" ></textarea></td>
             </tr>
         </table>
         <input type="submit" name="submit" class="button-primary wprmu-button" value="<?php echo _e( 'Upload Images', 'wp_remote_media_upload' ); ?>"/>

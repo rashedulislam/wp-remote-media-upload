@@ -117,13 +117,11 @@ class WP_Remote_Media_Upload_Admin {
 
     public function wp_media_upload_form_response() {
         check_ajax_referer( 'wp_remote_media_upload_nonce' );
-        $urls = $_POST['urls'];
-        $attachment_ids = [];
-        foreach ($urls as $url) {
-            $this->wp_download_remote_image = new WP_Download_Remote_Image($url);
-            $attachment_ids[] = $this->wp_download_remote_image->download();
-        }
-        wp_send_json( $attachment_ids );   
+        $url = $_POST['url'];
+        $attachment_id = "";
+        $this->wp_download_remote_image = new WP_Download_Remote_Image($url);
+        $attachment_id = $this->wp_download_remote_image->download();
+        wp_send_json( $attachment_id );   
     }
 
     
@@ -145,6 +143,7 @@ class WP_Remote_Media_Upload_Admin {
 	 */
 	public function enqueue_scripts() {
 
+		wp_enqueue_script( "wp_remote_media_upload_sweatalert", plugin_dir_url( __FILE__ ) . 'js/sweetalert.min.js', array( 'jquery' ), $this->version, false );
 		wp_enqueue_script( $this->wp_remote_media_upload, plugin_dir_url( __FILE__ ) . 'js/wp-remote-media-upload-admin.js', array( 'jquery' ), $this->version, false );
 
         wp_localize_script( $this->wp_remote_media_upload, 'wp_remote_media_upload_localize',
