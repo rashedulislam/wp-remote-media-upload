@@ -10,11 +10,11 @@
  *
  * @link              https://stacklearners.org/wp-remote-media-upload-uri/
  * @since             1.0.0
- * @package           WP_Remote_Media_Upload
+ * @package           Remote_Media_Upload
  *
  * @wordpress-plugin
- * Plugin Name:       WP Remote Media Upload
- * Plugin URI:        https://stacklearners.org/wp-remote-media-upload/
+ * Plugin Name:       Remote Media Upload
+ * Plugin URI:        https://stacklearners.org/remote-media-upload/
  * Description:       Upload Images From Remote URL Directly.
  * Version:           1.0.0
  * Author:            Md Rashedul Islam
