@@ -117,7 +117,7 @@ class WP_Remote_Media_Upload_Admin {
 
     public function wp_media_upload_form_response() {
         check_ajax_referer( 'wp_remote_media_upload_nonce' );
-        $url = $_POST['url'];
+        $url = esc_url($_POST['url']);
         $attachment_id = "";
         $this->wp_download_remote_image = new WP_Download_Remote_Image($url);
         $attachment_id = $this->wp_download_remote_image->download();
